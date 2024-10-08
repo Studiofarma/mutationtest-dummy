@@ -2,6 +2,7 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Partita {
     private String data;
@@ -19,41 +20,43 @@ public class Partita {
         this.golPartita = new ArrayList<>();
     }
 
+
     public Risultato getRisultato() {
         return risultato;
     }
 
     public void setRisultato(Risultato risultato,List<Gol> goal1,List<Gol> goal2) {
-        boolean correct=true;
-        if(risultato.getGoal1()!=goal1.size() || risultato.getGoal2()!=goal2.size()){
-            System.out.println("Errore! Il risultato e i marcatori non corrispondono");
-            correct=false;
-        }
-        else {
-            for (Gol g : goal1) {
-                if(squadraContieneGiocatore(squadraCasa,g.getGiocatore(),stagione)){
-                    golPartita.add(g);
+        if(risultato!=null) {
+            boolean correct = true;
+            if (risultato.getGoal1() != goal1.size() || risultato.getGoal2() != goal2.size()) {
+                System.out.println("Errore! Il risultato e i marcatori non corrispondono");
+                correct = false;
+            } else {
+                for (Gol g : goal1) {
+                    if (squadraContieneGiocatore(squadraCasa, g.getGiocatore(), stagione)) {
+                        golPartita.add(g);
+                    } else {
+                        System.out.println("Il giocatore: " + g.getGiocatore().getCognome() + " nella stagione " + stagione.getAnno() + " NON apparteneva alla squadra : " + squadraCasa.getNomeSquadra());
+                        correct = false;
+                    }
                 }
-                else{
-                    System.out.println("Il giocatore: "+g.getGiocatore().getCognome() + " nella stagione " + stagione.getAnno() + " NON apparteneva alla squadra : " + squadraCasa.getNomeSquadra());
-                    correct=false;
+                for (Gol g : goal2) {
+                    if (squadraContieneGiocatore(squadraOspite, g.getGiocatore(), stagione)) {
+                        golPartita.add(g);
+                    } else {
+                        System.out.println("Il giocatore: " + g.getGiocatore().getCognome() + " nella stagione " + stagione.getAnno() + " NON apparteneva alla squadra : " + squadraOspite.getNomeSquadra());
+                        correct = false;
+                    }
                 }
             }
-            for (Gol g : goal2) {
-                if(squadraContieneGiocatore(squadraOspite,g.getGiocatore(),stagione)){
-                    golPartita.add(g);
-                }
-                else{
-                    System.out.println("Il giocatore: "+g.getGiocatore().getCognome() + " nella stagione " + stagione.getAnno() + " NON apparteneva alla squadra : " + squadraOspite.getNomeSquadra());
-                    correct=false;
-                }
+            if (correct) {
+                this.risultato = risultato;
+                System.out.println("Risultato aggiunto correttamente!");
+            } else {
+                golPartita.clear();
             }
         }
-        if(correct){
-            this.risultato = risultato;
-            System.out.println("Risultato aggiunto correttamente!");
-        }
-        else{golPartita.clear();}
+        else throw new NullValueException("Risultato cannot be null");
     }
 
     public boolean squadraContieneGiocatore(Squadra squadra, Giocatore giocatore, Stagione stagione) {
@@ -78,7 +81,9 @@ public class Partita {
     }
 
     public void setSquadraCasa(Squadra squadraCasa) {
-        this.squadraCasa = squadraCasa;
+        if(squadraCasa!=null)
+            this.squadraCasa = squadraCasa;
+        else throw new NullValueException("Squadra cannot be null");
     }
 
     public Squadra getSquadraOspite() {
@@ -86,7 +91,9 @@ public class Partita {
     }
 
     public void setSquadraOspite(Squadra squadraOspite) {
-        this.squadraOspite = squadraOspite;
+        if(squadraOspite!=null)
+            this.squadraOspite = squadraOspite;
+        else throw new NullValueException("Squadra cannot be null");
     }
 
     public List<Gol> getGolPartita() {
@@ -102,7 +109,9 @@ public class Partita {
     }
 
     public void setStagione(Stagione stagione) {
-        this.stagione = stagione;
+        if(stagione==null)
+            throw new NullValueException("Stagione cannot be null");
+        else this.stagione = stagione;
     }
 
     @Override
@@ -122,4 +131,15 @@ public class Partita {
         sb.append("-----------------------------------------------------------");
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Partita) {
+            Partita p = (Partita) obj;
+            return Objects.equals(p.getData(), getData()) && p.getSquadraCasa()==getSquadraCasa() && p.getSquadraOspite()==getSquadraOspite()
+                    && p.getRisultato()==getRisultato() && p.getGolPartita()==getGolPartita() && p.getStagione().getAnno()==getStagione().getAnno();
+        }
+        return false;
+    }
+
 }

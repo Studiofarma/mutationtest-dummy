@@ -17,7 +17,9 @@ public class Giocatore {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if(nome==null)
+            throw new NullValueException("nome cannot be null");
+        else this.nome = nome;
     }
 
     public String getCognome() {
@@ -25,7 +27,9 @@ public class Giocatore {
     }
 
     public void setCognome(String cognome) {
-        this.cognome = cognome;
+        if(cognome==null)
+            throw new NullValueException("cognome cannot be null");
+        else this.cognome = cognome;
     }
 
     public String getRuolo() {
@@ -33,7 +37,9 @@ public class Giocatore {
     }
 
     public void setRuolo(String ruolo) {
-        this.ruolo = ruolo;
+        if(ruolo==null)
+            throw new NullValueException("ruolo cannot be null");
+        else this.ruolo = ruolo;
     }
 
 }

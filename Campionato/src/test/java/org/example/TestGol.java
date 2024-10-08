@@ -24,8 +24,8 @@ public class TestGol {
     // Setup method to initialize objects before each test
     @BeforeEach
     public void setUp() {
-        Squadra squadraCasa = new Squadra("Juventus", null, null);
-        Squadra squadraOspite = new Squadra("Milan", null, null);
+        //Squadra squadraCasa = new Squadra("Juventus", null, null);
+        //Squadra squadraOspite = new Squadra("Milan", null, null);
 
         campionato = new Campionato("Serie A");
         squadre = new ArrayList<>();
@@ -58,7 +58,7 @@ public class TestGol {
         squadre.add(milan);
 
         Stagione stagione = new Stagione(2024,squadre);
-        partita = new Partita("2024-10-03", squadraCasa, squadraOspite, stagione);
+        partita = new Partita("2024-10-03", juventus, milan, stagione);
 
         // Create a Gol instance with the initialized player and match
         gol = new Gol(g1, partita);
@@ -87,8 +87,8 @@ public class TestGol {
     // Test to verify that the setter method for Partita works correctly
     @Test
     public void testSetPartita() {
-        Squadra nuovaSquadraCasa = new Squadra("Inter", null, null);
-        Partita nuovaPartita = new Partita("2024-10-10", nuovaSquadraCasa, new Squadra("Roma", null, null), new Stagione(2024,squadre));
+        Squadra nuovaSquadraCasa = new Squadra("Inter", a1, giocatoriJuve);
+        Partita nuovaPartita = new Partita("2024-10-10", nuovaSquadraCasa, new Squadra("Roma", a2, giocatoriMilan), new Stagione(2024,squadre));
         gol.setPartita(nuovaPartita);
         assertEquals(nuovaPartita, gol.getPartita(), "Il setter della partita non funziona correttamente");
     }

@@ -209,7 +209,7 @@ class TestPartita {
         assertFalse(partita.squadraContieneGiocatore(juventus,g3,stagione));
         assertTrue(partita.squadraContieneGiocatore(juventus,g1,stagione));
         // caso che mi elimina il mutante
-        Squadra inter = new Squadra("Inter", null,  Collections.emptyList());
+        Squadra inter = new Squadra("Inter", a1,  Collections.emptyList());
         assertFalse(partita.squadraContieneGiocatore(inter,g1,stagione));
     }
 }

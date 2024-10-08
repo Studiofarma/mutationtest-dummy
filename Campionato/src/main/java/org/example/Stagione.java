@@ -18,11 +18,11 @@ public class Stagione {
     public void aggiungiPartita(Partita partita) {
         boolean flag = true;
         if (!squadre.contains(partita.getSquadraCasa())) {
-            System.out.println("Errore: Squadra: " + partita.getSquadraCasa().toString() + " non iscritta alla stagione!");
+            System.out.println("Errore: Squadra: " + partita.getSquadraCasa().getNomeSquadra() + " non iscritta alla stagione!");
             flag = false;
         }
         if (!squadre.contains(partita.getSquadraOspite())) {
-            System.out.println("Errore: Squadra: " + partita.getSquadraOspite().toString() + " non iscritta alla stagione!");
+            System.out.println("Errore: Squadra: " + partita.getSquadraOspite().getNomeSquadra() + " non iscritta alla stagione!");
             flag = false;
         }
         if (flag) {
@@ -46,11 +46,11 @@ public class Stagione {
         boolean flag = true;
         for (Partita p : partite) {
             if (!squadre.contains(p.getSquadraCasa())) {
-                System.out.println("Errore: Squadra: " + p.getSquadraCasa().toString() + " non iscritta alla stagione!");
+                System.out.println("Errore: Squadra: " + p.getSquadraCasa().getNomeSquadra() + " non iscritta alla stagione!");
                 flag = false;
             }
             if (!squadre.contains(p.getSquadraOspite())) {
-                System.out.println("Errore: Squadra: " + p.getSquadraOspite().toString() + " non iscritta alla stagione!");
+                System.out.println("Errore: Squadra: " + p.getSquadraOspite().getNomeSquadra() + " non iscritta alla stagione!");
                 flag = false;
             }
         }
@@ -75,9 +75,9 @@ public class Stagione {
     }
 
     // Metodo per calcolare la classifica
-    public Map<Squadra, Integer> calcolaClassifica() {
+    public LinkedHashMap<Squadra, Integer> calcolaClassifica() {
         // Mappa per tenere traccia dei punti delle squadre
-        Map<Squadra, Integer> classifica = new HashMap<>();
+        LinkedHashMap<Squadra, Integer> classifica = new LinkedHashMap<>();
 
         // Iteriamo su tutte le partite della stagione
         for (Partita partita : partite) {
@@ -114,8 +114,8 @@ public class Stagione {
 
     }
 
-    public Map<Giocatore, Integer> classificaMarcatori() {
-        Map<Giocatore, Integer> marcatori = new HashMap<>();
+    public LinkedHashMap<Giocatore, Integer> classificaMarcatori() {
+        LinkedHashMap<Giocatore, Integer> marcatori = new LinkedHashMap<>();
 
         for (Partita p : partite) {
             for (Gol g : p.getGolPartita()) {
@@ -141,6 +141,8 @@ public class Stagione {
     }
 
     public List<Giocatore> getGiocatoriSquadra(Squadra s) {
+        if(s==null)
+            return null;
         for (Squadra squadra : squadre) {
             if (squadra.getNomeSquadra().equalsIgnoreCase(s.getNomeSquadra())) {
                 return squadra.getGiocatori();
