@@ -60,6 +60,9 @@ public class Partita {
     }
 
     public boolean squadraContieneGiocatore(Squadra squadra, Giocatore giocatore, Stagione stagione) {
+        if(stagione==null || squadra==null || giocatore==null){
+            return false;
+        }
         List<Giocatore> giocatori = stagione.getGiocatoriSquadra(squadra);
 
         if (giocatori != null) {
@@ -130,16 +133,6 @@ public class Partita {
         }
         sb.append("-----------------------------------------------------------");
         return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Partita) {
-            Partita p = (Partita) obj;
-            return Objects.equals(p.getData(), getData()) && p.getSquadraCasa()==getSquadraCasa() && p.getSquadraOspite()==getSquadraOspite()
-                    && p.getRisultato()==getRisultato() && p.getGolPartita()==getGolPartita() && p.getStagione().getAnno()==getStagione().getAnno();
-        }
-        return false;
     }
 
 }

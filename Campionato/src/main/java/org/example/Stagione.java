@@ -16,6 +16,10 @@ public class Stagione {
 
     // Aggiungere una partita alla stagione
     public void aggiungiPartita(Partita partita) {
+        if(partita==null){
+            throw new NullValueException("Partita cannot be null");
+        }
+        else{
         boolean flag = true;
         if (!squadre.contains(partita.getSquadraCasa())) {
             System.out.println("Errore: Squadra: " + partita.getSquadraCasa().getNomeSquadra() + " non iscritta alla stagione!");
@@ -27,7 +31,7 @@ public class Stagione {
         }
         if (flag) {
             partite.add(partita);
-        }
+        }}
     }
 
     public List<Partita> getPartite() {
@@ -39,10 +43,17 @@ public class Stagione {
     }
 
     public void setAnno(int anno) {
-        this.anno = anno;
+        if(anno<1900 || anno> 2200)
+            throw new NullValueException("Anno invalido");
+        else this.anno = anno;
     }
 
+
     public void setPartite(List<Partita> partite) {
+        if(partite==null || partite.contains(null)){
+            throw new NullValueException("Partite cannot be null");
+        }
+        else{
         boolean flag = true;
         for (Partita p : partite) {
             if (!squadre.contains(p.getSquadraCasa())) {
@@ -58,7 +69,7 @@ public class Stagione {
         if (flag) {
             this.partite.addAll(partite);
         }
-
+        }
 
     }
 
@@ -137,7 +148,9 @@ public class Stagione {
     }
 
     public void setSquadre(List<Squadra> squadre) {
-        this.squadre = squadre;
+        if(squadre==null || squadre.contains(null))
+            throw new NullValueException("Squadre cannot be null");
+        else this.squadre = squadre;
     }
 
     public List<Giocatore> getGiocatoriSquadra(Squadra s) {
