@@ -43,20 +43,18 @@ public class TestAllenatore {
     @Test
     public void testConstructorWithInvalidNome() {
         // Verifica se il costruttore gestisce nomi non validi (null o vuoti)
-        allenatore.setNome(null);
-        assertNull(allenatore.getNome(), "Il nome dovrebbe essere null");
-
-        allenatore.setNome("");
-        assertEquals("", allenatore.getNome(), "Il nome dovrebbe essere una stringa vuota");
+        Exception exception = assertThrows(NullValueException.class, () -> {
+            allenatore.setNome(null);
+        });
+        assertEquals("Nome cannot be null", exception.getMessage());
     }
 
     @Test
     public void testConstructorWithInvalidCognome() {
         // Verifica se il costruttore gestisce cognomi non validi (null o vuoti)
-        allenatore.setCognome(null);
-        assertNull(allenatore.getCognome(), "Il cognome dovrebbe essere null");
-
-        allenatore.setCognome("");
-        assertEquals("", allenatore.getCognome(), "Il cognome dovrebbe essere una stringa vuota");
+        Exception exception = assertThrows(NullValueException.class, () -> {
+            allenatore.setCognome(null);
+        });
+        assertEquals("Cognome cannot be null", exception.getMessage());
     }
 }

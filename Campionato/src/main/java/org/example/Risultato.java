@@ -2,8 +2,8 @@ package org.example;
 
 public class Risultato {
 
-    private int goal1=0;
-    private int goal2=0;
+    private int goal1;
+    private int goal2;
 
     public Risultato(int goal1, int goal2) {
         setGoal1(goal1);

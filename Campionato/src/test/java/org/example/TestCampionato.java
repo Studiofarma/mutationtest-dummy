@@ -90,4 +90,15 @@ public class TestCampionato {
         assertTrue(stagioni.contains(stagione2025));
     }
 
+    @Test
+    public void testGetStagioniNull() {
+        assertNull(campionato.getStagioneByAnno(2026)); // Assicura che il risultato sia null
+    }
+
+    @Test
+    public void testGetStagioneByAnno() {
+        Stagione stagione2024 = new Stagione(2024, squadre);
+        campionato.aggiungiStagione(stagione2024);
+        assertEquals(stagione2024,campionato.getStagioneByAnno(2024));
+    }
 }

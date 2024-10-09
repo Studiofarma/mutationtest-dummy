@@ -15,7 +15,10 @@ public class Gol {
     }
 
     public void setGiocatore(Giocatore giocatore) {
-        this.giocatore = giocatore;
+        if(giocatore==null)
+            throw new NullValueException("Giocatore cannot be null");
+        else this.giocatore = giocatore;
+
     }
 
     public Partita getPartita() {
@@ -23,7 +26,10 @@ public class Gol {
     }
 
     public void setPartita(Partita partita) {
-        this.partita = partita;
+        if(partita==null)
+            throw new NullValueException("Partita cannot be null");
+        else this.partita = partita;
+
     }
 
 

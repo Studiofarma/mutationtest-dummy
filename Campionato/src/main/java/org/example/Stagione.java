@@ -16,18 +16,22 @@ public class Stagione {
 
     // Aggiungere una partita alla stagione
     public void aggiungiPartita(Partita partita) {
+        if(partita==null){
+            throw new NullValueException("Partita cannot be null");
+        }
+        else{
         boolean flag = true;
         if (!squadre.contains(partita.getSquadraCasa())) {
-            System.out.println("Errore: Squadra: " + partita.getSquadraCasa().toString() + " non iscritta alla stagione!");
+            System.out.println("Errore: Squadra: " + partita.getSquadraCasa().getNomeSquadra() + " non iscritta alla stagione!");
             flag = false;
         }
         if (!squadre.contains(partita.getSquadraOspite())) {
-            System.out.println("Errore: Squadra: " + partita.getSquadraOspite().toString() + " non iscritta alla stagione!");
+            System.out.println("Errore: Squadra: " + partita.getSquadraOspite().getNomeSquadra() + " non iscritta alla stagione!");
             flag = false;
         }
         if (flag) {
             partite.add(partita);
-        }
+        }}
     }
 
     public List<Partita> getPartite() {
@@ -39,18 +43,25 @@ public class Stagione {
     }
 
     public void setAnno(int anno) {
-        this.anno = anno;
+        if(anno<1900 || anno> 2200)
+            throw new NullValueException("Anno invalido");
+        else this.anno = anno;
     }
 
+
     public void setPartite(List<Partita> partite) {
+        if(partite==null || partite.contains(null)){
+            throw new NullValueException("Partite cannot be null");
+        }
+        else{
         boolean flag = true;
         for (Partita p : partite) {
             if (!squadre.contains(p.getSquadraCasa())) {
-                System.out.println("Errore: Squadra: " + p.getSquadraCasa().toString() + " non iscritta alla stagione!");
+                System.out.println("Errore: Squadra: " + p.getSquadraCasa().getNomeSquadra() + " non iscritta alla stagione!");
                 flag = false;
             }
             if (!squadre.contains(p.getSquadraOspite())) {
-                System.out.println("Errore: Squadra: " + p.getSquadraOspite().toString() + " non iscritta alla stagione!");
+                System.out.println("Errore: Squadra: " + p.getSquadraOspite().getNomeSquadra() + " non iscritta alla stagione!");
                 flag = false;
             }
         }
@@ -58,7 +69,7 @@ public class Stagione {
         if (flag) {
             this.partite.addAll(partite);
         }
-
+        }
 
     }
 
@@ -75,9 +86,9 @@ public class Stagione {
     }
 
     // Metodo per calcolare la classifica
-    public Map<Squadra, Integer> calcolaClassifica() {
+    public LinkedHashMap<Squadra, Integer> calcolaClassifica() {
         // Mappa per tenere traccia dei punti delle squadre
-        Map<Squadra, Integer> classifica = new HashMap<>();
+        LinkedHashMap<Squadra, Integer> classifica = new LinkedHashMap<>();
 
         // Iteriamo su tutte le partite della stagione
         for (Partita partita : partite) {
@@ -114,8 +125,8 @@ public class Stagione {
 
     }
 
-    public Map<Giocatore, Integer> classificaMarcatori() {
-        Map<Giocatore, Integer> marcatori = new HashMap<>();
+    public LinkedHashMap<Giocatore, Integer> classificaMarcatori() {
+        LinkedHashMap<Giocatore, Integer> marcatori = new LinkedHashMap<>();
 
         for (Partita p : partite) {
             for (Gol g : p.getGolPartita()) {
@@ -137,10 +148,14 @@ public class Stagione {
     }
 
     public void setSquadre(List<Squadra> squadre) {
-        this.squadre = squadre;
+        if(squadre==null || squadre.contains(null))
+            throw new NullValueException("Squadre cannot be null");
+        else this.squadre = squadre;
     }
 
     public List<Giocatore> getGiocatoriSquadra(Squadra s) {
+        if(s==null)
+            return null;
         for (Squadra squadra : squadre) {
             if (squadra.getNomeSquadra().equalsIgnoreCase(s.getNomeSquadra())) {
                 return squadra.getGiocatori();

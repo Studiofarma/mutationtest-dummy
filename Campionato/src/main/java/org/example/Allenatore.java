@@ -15,7 +15,9 @@ public class Allenatore {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if(nome==null)
+            throw new NullValueException("Nome cannot be null");
+        else this.nome = nome;
     }
 
     public String getCognome() {
@@ -23,6 +25,8 @@ public class Allenatore {
     }
 
     public void setCognome(String cognome) {
-        this.cognome = cognome;
+        if(cognome==null)
+            throw new NullValueException("Cognome cannot be null");
+       else this.cognome = cognome;
     }
 }
