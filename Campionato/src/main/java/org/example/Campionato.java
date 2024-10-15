@@ -11,7 +11,6 @@ public class Campionato {
        setNomeCampionato(nomeCampionato);
         this.stagioni = new ArrayList<>();
     }
-
     // Aggiungere una stagione al campionato
     public void aggiungiStagione(Stagione stagione) {
         stagioni.add(stagione);

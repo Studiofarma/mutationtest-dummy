@@ -20,7 +20,9 @@ public class Squadra {
     }
 
     public void setNomeSquadra(String nomeSquadra) {
-        this.nomeSquadra = nomeSquadra;
+        if(nomeSquadra==null)
+            throw new NullValueException("Nome squadra cannot be null");
+        else this.nomeSquadra = nomeSquadra;
     }
 
 
@@ -29,7 +31,10 @@ public class Squadra {
     }
 
     public void setAllenatore(Allenatore allenatore) {
-        this.allenatore = allenatore;
+        if(allenatore==null)
+            throw new NullValueException("Allenatore cannot be null");
+        else this.allenatore = allenatore;
+
     }
 
     public List<Giocatore> getGiocatori() {
@@ -37,6 +42,8 @@ public class Squadra {
     }
 
     public void setGiocatori(List<Giocatore> giocatori) {
-        this.giocatori = giocatori;
+        if(giocatori==null)
+            throw new NullValueException("Partita cannot be null");
+        else this.giocatori = giocatori;
     }
 }
