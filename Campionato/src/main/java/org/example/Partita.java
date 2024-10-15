@@ -60,13 +60,13 @@ public class Partita {
     }
 
     public boolean squadraContieneGiocatore(Squadra squadra, Giocatore giocatore, Stagione stagione) {
-        if(stagione==null || squadra==null || giocatore==null){
+        List<Giocatore> giocatori;
+        if(stagione!= null && squadra!=null && giocatore!=null){
+            giocatori = stagione.getGiocatoriSquadra(squadra);
+            if(giocatori!=null){
+                return giocatori.contains(giocatore);
+            }
             return false;
-        }
-        List<Giocatore> giocatori = stagione.getGiocatoriSquadra(squadra);
-
-        if (giocatori != null) {
-            return giocatori.contains(giocatore);
         }
         return false;
     }

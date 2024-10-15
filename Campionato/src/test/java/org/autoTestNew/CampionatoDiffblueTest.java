@@ -63,6 +63,37 @@ public class CampionatoDiffblueTest {
     }
 
     /**
+     * Method under test: {@link Campionato#getStagioneByAnno(int)}
+     */
+    @Test
+    void testGetStagioneByAnno2() {
+        // Arrange
+        Campionato campionato = new Campionato("alice.liddell@example.org");
+        Stagione stagione = new Stagione(2000, new ArrayList<>());
+        // Act
+        campionato.aggiungiStagione(stagione);
+        // Assert
+       assertEquals(stagione,campionato.getStagioneByAnno(2000));
+    }
+
+    /**
+     * Method under test: {@link Campionato#getStagioneByAnno(int)}
+     */
+    @Test
+    void testGetStagioneByAnno3() {
+        // Arrange
+        Campionato campionato = new Campionato("alice.liddell@example.org");
+        Stagione stagione = new Stagione(2000, new ArrayList<>());
+        // Act
+        campionato.aggiungiStagione(stagione);
+        // Assert
+        assertNull(campionato.getStagioneByAnno(2001));
+    }
+
+
+
+
+    /**
      * Methods under test:
      * <ul>
      *   <li>{@link Campionato#setNomeCampionato(String)}

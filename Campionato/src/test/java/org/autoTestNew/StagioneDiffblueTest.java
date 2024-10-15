@@ -1,18 +1,13 @@
 package org.autoTestNew;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.example.*;
 import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StagioneDiffblueTest {
 
@@ -38,7 +33,7 @@ public class StagioneDiffblueTest {
         //   Diffblue AI was unable to find a test
 
         // Arrange
-        Stagione stagione = new Stagione(1900, new ArrayList<>());
+
         Allenatore allenatore = new Allenatore("Nome", "Cognome");
 
         Squadra squadraCasa = new Squadra("Nome Squadra", allenatore, new ArrayList<>());
@@ -47,27 +42,25 @@ public class StagioneDiffblueTest {
 
         Squadra squadraOspite = new Squadra("Nome Squadra", allenatore2, new ArrayList<>());
 
+        List<Squadra> squadre=new ArrayList<>();
+        squadre.add(squadraCasa);
+        squadre.add(squadraOspite);
+        Stagione stagione = new Stagione(1900, squadre);
         // Act
-        stagione.aggiungiPartita(new Partita("Data", squadraCasa, squadraOspite, new Stagione(1900, new ArrayList<>())));
+
+        Partita p=new Partita("Data", squadraCasa, squadraOspite, stagione);
+        stagione.aggiungiPartita(p);
+
+        assertEquals(p,stagione.getPartite().get(0));
     }
 
     /**
      * Method under test: {@link Stagione#aggiungiPartita(Partita)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testAggiungiPartita3() {
-        // TODO: Diffblue Cover was only able to create a partial test for this method:
-        //   Reason: No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.example.NullValueException: Anno invalido
-        //       at org.example.Stagione.setAnno(Stagione.java:47)
-        //       at org.example.Stagione.<init>(Stagione.java:12)
-        //   See https://diff.blue/R013 to resolve this issue.
-
         // Arrange
-        Stagione stagione = new Stagione(1, new ArrayList<>());
+
         Allenatore allenatore = new Allenatore("Nome", "Cognome");
 
         Squadra squadraCasa = new Squadra("Nome Squadra", allenatore, new ArrayList<>());
@@ -76,15 +69,22 @@ public class StagioneDiffblueTest {
 
         Squadra squadraOspite = new Squadra("Nome Squadra", allenatore2, new ArrayList<>());
 
+        List<Squadra> squadre=new ArrayList<>();
+        //squadre.add(squadraCasa);
+        squadre.add(squadraOspite);
+        Stagione stagione = new Stagione(1900, squadre);
         // Act
-        stagione.aggiungiPartita(new Partita("Data", squadraCasa, squadraOspite, new Stagione(1, new ArrayList<>())));
+
+        Partita p=new Partita("Data", squadraCasa, squadraOspite, stagione);
+        stagione.aggiungiPartita(p);
+
+        assertEquals(Collections.emptyList(),stagione.getPartite());
     }
 
     /**
      * Method under test: {@link Stagione#aggiungiPartita(Partita)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testAggiungiPartita4() {
         // TODO: Diffblue Cover was only able to create a partial test for this method:
         //   Reason: No inputs found that don't throw a trivial exception.
@@ -95,12 +95,26 @@ public class StagioneDiffblueTest {
         //       at org.example.Stagione.<init>(Stagione.java:12)
         //   See https://diff.blue/R013 to resolve this issue.
 
-        // Arrange
-        Stagione stagione = new Stagione(1, new ArrayList<>());
-        stagione.setSquadre(new ArrayList<>());
+        /// Arrange
 
+        Allenatore allenatore = new Allenatore("Nome", "Cognome");
+
+        Squadra squadraCasa = new Squadra("Nome Squadra", allenatore, new ArrayList<>());
+
+        Allenatore allenatore2 = new Allenatore("Nome", "Cognome");
+
+        Squadra squadraOspite = new Squadra("Nome Squadra", allenatore2, new ArrayList<>());
+
+        List<Squadra> squadre=new ArrayList<>();
+        squadre.add(squadraCasa);
+        //squadre.add(squadraOspite);
+        Stagione stagione = new Stagione(1900, squadre);
         // Act
-        stagione.aggiungiPartita(null);
+
+        Partita p=new Partita("Data", squadraCasa, squadraOspite, stagione);
+        stagione.aggiungiPartita(p);
+
+        assertEquals(Collections.emptyList(),stagione.getPartite());
     }
 
     /**
@@ -139,8 +153,13 @@ public class StagioneDiffblueTest {
     @Test
     void testSetAnno() {
         // Arrange, Act and Assert
-        assertThrows(NullValueException.class, () -> (new Stagione(1900, new ArrayList<>())).setAnno(1));
-        assertThrows(NullValueException.class, () -> (new Stagione(1900, new ArrayList<>())).setAnno(2201));
+        Stagione stagione=new Stagione(2000,new ArrayList<>());
+        assertThrows(NullValueException.class, () -> stagione.setAnno(1899));
+        assertThrows(NullValueException.class, () -> stagione.setAnno(2201));
+        stagione.setAnno(1900);
+        assertEquals(1900,stagione.getAnno());
+        stagione.setAnno(2200);
+        assertEquals(2200,stagione.getAnno());;
     }
 
     /**
@@ -254,22 +273,7 @@ public class StagioneDiffblueTest {
      * Method under test: {@link Stagione#setPartite(List)}
      */
     @Test
-    void testSetPartite() {
-        // TODO: Diffblue Cover was only able to create a partial test for this method:
-        //   Diffblue AI was unable to find a test
-
-        // Arrange
-        Stagione stagione = new Stagione(1900, new ArrayList<>());
-
-        // Act
-        stagione.setPartite(new ArrayList<>());
-    }
-
-    /**
-     * Method under test: {@link Stagione#setPartite(List)}
-     */
-    @Test
-    void testSetPartite2() {
+    void testSetPartiteNoSquadraInStagione() {
         // TODO: Diffblue Cover was only able to create a partial test for this method:
         //   Diffblue AI was unable to find a test
 
@@ -277,6 +281,7 @@ public class StagioneDiffblueTest {
         Stagione stagione = new Stagione(1900, new ArrayList<>());
 
         ArrayList<Partita> partite = new ArrayList<>();
+        ArrayList<Squadra> squadre = new ArrayList<>();
         Allenatore allenatore = new Allenatore("Nome", "Cognome");
 
         Squadra squadraCasa = new Squadra("Nome Squadra", allenatore, new ArrayList<>());
@@ -285,10 +290,53 @@ public class StagioneDiffblueTest {
 
         Squadra squadraOspite = new Squadra("Nome Squadra", allenatore2, new ArrayList<>());
 
-        partite.add(new Partita("Data", squadraCasa, squadraOspite, new Stagione(1900, new ArrayList<>())));
+        //squadre.add(squadraOspite);
+        squadre.add(squadraCasa);
 
+        stagione.setSquadre(squadre);
+        Partita partita=new Partita("2020-01-10",squadraCasa,squadraOspite,stagione);
+
+        partite.add(partita);
         // Act
         stagione.setPartite(partite);
+
+        assertEquals(Collections.emptyList(), stagione.getPartite());
+    }
+
+    /**
+     * Method under test: {@link Stagione#setPartite(List)}
+     */
+    @Test
+    void testSetPartite() {
+        // TODO: Diffblue Cover was only able to create a partial test for this method:
+        //   Diffblue AI was unable to find a test
+
+        // Arrange
+        Stagione stagione = new Stagione(1900, new ArrayList<>());
+
+        ArrayList<Partita> partite = new ArrayList<>();
+        ArrayList<Squadra> squadre = new ArrayList<>();
+        Allenatore allenatore = new Allenatore("Nome", "Cognome");
+
+        Squadra squadraCasa = new Squadra("Nome Squadra", allenatore, new ArrayList<>());
+
+        Allenatore allenatore2 = new Allenatore("Nome", "Cognome");
+
+        Squadra squadraOspite = new Squadra("Nome Squadra", allenatore2, new ArrayList<>());
+
+        squadre.add(squadraOspite);
+        squadre.add(squadraCasa);
+
+        stagione.setSquadre(squadre);
+        Partita partita=new Partita("2020-01-10",squadraCasa,squadraOspite,stagione);
+        Partita partita2=new Partita("2020-02-10",squadraOspite,squadraCasa,stagione);
+
+        partite.add(partita);
+        partite.add(partita2);
+        // Act
+        stagione.setPartite(partite);
+
+        assertEquals(partite, stagione.getPartite());
     }
 
     /**
@@ -521,21 +569,116 @@ public class StagioneDiffblueTest {
      * Method under test: {@link Stagione#classificaMarcatori()}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testClassificaMarcatori2() {
         // TODO: Diffblue Cover was only able to create a partial test for this method:
         //   Reason: No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
         //   test threw
-        //   org.example.NullValueException: Anno invalido
-        //       at org.example.Stagione.setAnno(Stagione.java:47)
-        //       at org.example.Stagione.<init>(Stagione.java:12)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         // Arrange and Act
-        (new Stagione(1, new ArrayList<>())).classificaMarcatori();
+
+
+        Campionato serieA = new Campionato("Serie A");
+
+        // Creazione dei giocatori
+        Giocatore g1 = new Giocatore("Dusan", "Vlahovic", "Attaccante");
+        Giocatore g2 = new Giocatore("Nicolò", "Fagioli", "Centrocampista");
+        Giocatore g3 = new Giocatore("Alvaro", "Morata", "Attaccante");
+        Giocatore g4 = new Giocatore("Christian", "Pulisic", "Centrocampista");
+        Giocatore g5 = new Giocatore("Lautaro", "Martinez", "Attaccante");
+        Giocatore g6 = new Giocatore("Nicolo", "Barella", "Centrocampista");
+
+        // Creazione degli allenatori
+        Allenatore a1 = new Allenatore("Thiago", "Motta");
+        Allenatore a2 = new Allenatore("Max", "Allegri");
+        Allenatore a3 = new Allenatore("Stefano", "Pioli");
+        Allenatore a4 = new Allenatore("Simone", "Inzaghi");
+
+        // Creazione delle liste di giocatori per squadra e per stagione
+        List<Giocatore> giocatoriJuve = new ArrayList<>();
+        giocatoriJuve.add(g1);
+        giocatoriJuve.add(g2);
+
+        List<Giocatore> giocatoriMilan = new ArrayList<>();
+        giocatoriMilan.add(g3);
+        giocatoriMilan.add(g4);
+
+        List<Giocatore> giocatoriInter = new ArrayList<>();
+        giocatoriInter.add(g5);
+        giocatoriInter.add(g6);
+
+        // Creazione delle squadre
+        Squadra juventus = new Squadra("Juventus", a1, giocatoriJuve);
+        Squadra milan = new Squadra("Milan", a3, giocatoriMilan);
+        Squadra inter = new Squadra("Inter", a4, giocatoriInter);
+
+        List <Squadra> squadre=new ArrayList<>();
+        squadre.add(juventus);
+        squadre.add(milan);
+        squadre.add(inter);
+
+        // Creazione delle stagioni
+        Stagione stagione2024 = new Stagione(2024, squadre);
+
+        // Creazione di partite per la stagione 2024
+        Partita partita1 = new Partita("2024-10-03", juventus, milan, stagione2024);
+        Partita partita2 = new Partita("2024-10-10", milan, inter, stagione2024);
+        Partita partita3 = new Partita("2024-10-17", inter,juventus, stagione2024);
+        Partita partita4= new Partita("2024-05-06",juventus,milan,stagione2024);
+        // Impostazione dei risultati
+        Risultato risultato1 = new Risultato(2, 1); // Juventus 2 - Milan 1
+        Risultato risultato2 = new Risultato(1, 1); // Milan 1 - Inter 1 (pareggio)
+        Risultato risultato3 = new Risultato(3, 0); //  Juventus 0 - Inter 3
+
+        // Aggiunta dei risultati e dei gol (esempio di giocatori che segnano)
+        List<Gol> golPartita1Juve = Arrays.asList(new Gol(g1, partita1), new Gol(g1, partita1)); // Doppietta di Vlahovic
+        List<Gol> golPartita1Milan = Arrays.asList(new Gol(g3, partita1)); // Gol di Morata
+
+        partita1.setRisultato(risultato1, golPartita1Juve, golPartita1Milan);
+
+        List<Gol> golPartita2Milan = Arrays.asList(new Gol(g3, partita2)); // Gol di Morata
+        List<Gol> golPartita2Inter = Arrays.asList(new Gol(g5, partita2)); // Gol di Lautaro
+
+        partita2.setRisultato(risultato2, golPartita2Milan, golPartita2Inter);
+
+        List<Gol> golPartita3Inter = Arrays.asList(new Gol(g5, partita3), new Gol(g6, partita3), new Gol(g5, partita3)); // Lautaro doppietta, Barella 1 gol
+
+        partita3.setRisultato(risultato3,golPartita3Inter,new ArrayList<>());
+
+        // Aggiunta delle partite alla stagione
+        stagione2024.aggiungiPartita(partita1);
+        stagione2024.aggiungiPartita(partita2);
+        stagione2024.aggiungiPartita(partita3);
+
+        // Aggiunta della stagione al campionato
+        serieA.aggiungiStagione(stagione2024);
+
+
+        LinkedHashMap<Giocatore, Integer> marcatori = stagione2024.classificaMarcatori();
+        LinkedHashMap<Giocatore, Integer> expectedMarcatori = new LinkedHashMap<>();
+        expectedMarcatori.put(g5,3);
+        expectedMarcatori.put(g1,2);
+        expectedMarcatori.put(g3,2);
+        expectedMarcatori.put(g6,1);
+
+        assertEqualsMarcatori(expectedMarcatori, marcatori); // G
     }
 
+    private void assertEqualsMarcatori(LinkedHashMap<Giocatore, Integer> expected, LinkedHashMap<Giocatore, Integer> actual) {
+
+        assertEquals(expected.size(), actual.size(), "Mappa di dimensioni diverse");
+
+        Iterator<Map.Entry<Giocatore, Integer>> expectedIterator = expected.entrySet().iterator();
+        Iterator<Map.Entry<Giocatore, Integer>> actualIterator = actual.entrySet().iterator();
+
+        while (expectedIterator.hasNext() && actualIterator.hasNext()) {
+            Map.Entry<Giocatore, Integer> expectedEntry = expectedIterator.next();
+            Map.Entry<Giocatore, Integer> actualEntry = actualIterator.next();
+
+            assertEquals(expectedEntry.getKey(), actualEntry.getKey(), "I giocatori non sono gli stessi");
+            assertEquals(expectedEntry.getValue(), actualEntry.getValue(), "I goal non corrispondono");
+        }
+    }
     /**
      * Method under test: {@link Stagione#setSquadre(List)}
      */
@@ -764,6 +907,175 @@ public class StagioneDiffblueTest {
 
         // Act
         stagione.getGiocatoriSquadra(new Squadra("Nome Squadra", allenatore2, new ArrayList<>()));
+    }
+
+
+    // Test per verificare che nessuna squadra giochi contro se stessa:
+    @Test
+    public void testNessunaSquadraGiocaControSeStessa() {
+        Campionato serieA = new Campionato("Serie A");
+
+        // Creazione dei giocatori
+        Giocatore g1 = new Giocatore("Dusan", "Vlahovic", "Attaccante");
+        Giocatore g2 = new Giocatore("Nicolò", "Fagioli", "Centrocampista");
+        Giocatore g3 = new Giocatore("Alvaro", "Morata", "Attaccante");
+        Giocatore g4 = new Giocatore("Christian", "Pulisic", "Centrocampista");
+        Giocatore g5 = new Giocatore("Lautaro", "Martinez", "Attaccante");
+        Giocatore g6 = new Giocatore("Nicolo", "Barella", "Centrocampista");
+
+        // Creazione degli allenatori
+        Allenatore a1 = new Allenatore("Thiago", "Motta");
+        Allenatore a2 = new Allenatore("Max", "Allegri");
+        Allenatore a3 = new Allenatore("Stefano", "Pioli");
+        Allenatore a4 = new Allenatore("Simone", "Inzaghi");
+
+        // Creazione delle liste di giocatori per squadra e per stagione
+        List<Giocatore> giocatoriJuve = new ArrayList<>();
+        giocatoriJuve.add(g1);
+        giocatoriJuve.add(g2);
+
+        List<Giocatore> giocatoriMilan = new ArrayList<>();
+        giocatoriMilan.add(g3);
+        giocatoriMilan.add(g4);
+
+        List<Giocatore> giocatoriInter = new ArrayList<>();
+        giocatoriInter.add(g5);
+        giocatoriInter.add(g6);
+
+        // Creazione delle squadre
+        Squadra juventus = new Squadra("Juventus", a1, giocatoriJuve);
+        Squadra milan = new Squadra("Milan", a3, giocatoriMilan);
+        Squadra inter = new Squadra("Inter", a4, giocatoriInter);
+
+        List <Squadra> squadre=new ArrayList<>();
+        squadre.add(juventus);
+        squadre.add(milan);
+        squadre.add(inter);
+
+        // Creazione delle stagioni
+        Stagione stagione2024 = new Stagione(2024, squadre);
+
+        serieA.aggiungiStagione(stagione2024);
+        serieA.getStagioneByAnno(2024).creaPartite();
+        List<Partita> partite = serieA.getStagioneByAnno(2024).getPartite();
+        for (Partita partita : partite) {
+            assertNotEquals(partita.getSquadraCasa(), partita.getSquadraOspite(),
+                    "Una squadra gioca contro se stessa");
+        }
+    }
+
+    //Test per verificare che il numero di partite sia corretto
+    @Test
+    public void testNumeroCorrettoDiPartite() {
+        Campionato serieA = new Campionato("Serie A");
+
+        // Creazione dei giocatori
+        Giocatore g1 = new Giocatore("Dusan", "Vlahovic", "Attaccante");
+        Giocatore g2 = new Giocatore("Nicolò", "Fagioli", "Centrocampista");
+        Giocatore g3 = new Giocatore("Alvaro", "Morata", "Attaccante");
+        Giocatore g4 = new Giocatore("Christian", "Pulisic", "Centrocampista");
+        Giocatore g5 = new Giocatore("Lautaro", "Martinez", "Attaccante");
+        Giocatore g6 = new Giocatore("Nicolo", "Barella", "Centrocampista");
+
+        // Creazione degli allenatori
+        Allenatore a1 = new Allenatore("Thiago", "Motta");
+        Allenatore a2 = new Allenatore("Max", "Allegri");
+        Allenatore a3 = new Allenatore("Stefano", "Pioli");
+        Allenatore a4 = new Allenatore("Simone", "Inzaghi");
+
+        // Creazione delle liste di giocatori per squadra e per stagione
+        List<Giocatore> giocatoriJuve = new ArrayList<>();
+        giocatoriJuve.add(g1);
+        giocatoriJuve.add(g2);
+
+        List<Giocatore> giocatoriMilan = new ArrayList<>();
+        giocatoriMilan.add(g3);
+        giocatoriMilan.add(g4);
+
+        List<Giocatore> giocatoriInter = new ArrayList<>();
+        giocatoriInter.add(g5);
+        giocatoriInter.add(g6);
+
+        // Creazione delle squadre
+        Squadra juventus = new Squadra("Juventus", a1, giocatoriJuve);
+        Squadra milan = new Squadra("Milan", a3, giocatoriMilan);
+        Squadra inter = new Squadra("Inter", a4, giocatoriInter);
+
+        List <Squadra> squadre=new ArrayList<>();
+        squadre.add(juventus);
+        squadre.add(milan);
+        squadre.add(inter);
+
+        // Creazione delle stagioni
+        Stagione stagione2024 = new Stagione(2024, squadre);
+
+        serieA.aggiungiStagione(stagione2024);
+        serieA.getStagioneByAnno(2024).creaPartite();
+        List<Partita> partite = serieA.getStagioneByAnno(2024).getPartite();
+
+        int numeroSquadre = squadre.size();
+        int numeroAttesoPartite = (numeroSquadre * (numeroSquadre - 1)) ;
+        assertEquals(numeroAttesoPartite, partite.size(),
+                "Il numero di partite non è corretto");
+    }
+
+    // Unica combinazione
+    @Test
+    public void testCombinazioniUnicheDiSquadre() {
+        Campionato serieA = new Campionato("Serie A");
+
+        // Creazione dei giocatori
+        Giocatore g1 = new Giocatore("Dusan", "Vlahovic", "Attaccante");
+        Giocatore g2 = new Giocatore("Nicolò", "Fagioli", "Centrocampista");
+        Giocatore g3 = new Giocatore("Alvaro", "Morata", "Attaccante");
+        Giocatore g4 = new Giocatore("Christian", "Pulisic", "Centrocampista");
+        Giocatore g5 = new Giocatore("Lautaro", "Martinez", "Attaccante");
+        Giocatore g6 = new Giocatore("Nicolo", "Barella", "Centrocampista");
+
+        // Creazione degli allenatori
+        Allenatore a1 = new Allenatore("Thiago", "Motta");
+        Allenatore a2 = new Allenatore("Max", "Allegri");
+        Allenatore a3 = new Allenatore("Stefano", "Pioli");
+        Allenatore a4 = new Allenatore("Simone", "Inzaghi");
+
+        // Creazione delle liste di giocatori per squadra e per stagione
+        List<Giocatore> giocatoriJuve = new ArrayList<>();
+        giocatoriJuve.add(g1);
+        giocatoriJuve.add(g2);
+
+        List<Giocatore> giocatoriMilan = new ArrayList<>();
+        giocatoriMilan.add(g3);
+        giocatoriMilan.add(g4);
+
+        List<Giocatore> giocatoriInter = new ArrayList<>();
+        giocatoriInter.add(g5);
+        giocatoriInter.add(g6);
+
+        // Creazione delle squadre
+        Squadra juventus = new Squadra("Juventus", a1, giocatoriJuve);
+        Squadra milan = new Squadra("Milan", a3, giocatoriMilan);
+        Squadra inter = new Squadra("Inter", a4, giocatoriInter);
+
+        List <Squadra> squadre=new ArrayList<>();
+        squadre.add(juventus);
+        squadre.add(milan);
+        squadre.add(inter);
+
+        // Creazione delle stagioni
+        Stagione stagione2024 = new Stagione(2024, squadre);
+        serieA.aggiungiStagione(stagione2024);
+
+        serieA.getStagioneByAnno(2024).creaPartite();
+        List<Partita> partite = serieA.getStagioneByAnno(2024).getPartite();
+
+        Set<String> combinazioni = new HashSet<>();
+        for (Partita partita : partite) {
+            String combinazione = partita.getSquadraCasa().getNomeSquadra() +
+                    "-" + partita.getSquadraOspite().getNomeSquadra();
+            combinazioni.add(combinazione);
+        }
+        assertEquals(partite.size(), combinazioni.size(),
+                "Ci sono partite duplicate o squadre ripetute");
     }
 
     /**
